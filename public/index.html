@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Employee Portal</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        header {
+            background: #172554;
+            color: white;
+            padding: 22px 40px;
+        }
+
+        header h1 {
+            font-size: 25px;
+        }
+
+        header p {
+            margin-top: 8px;
+            color: #cbd5e1;
+        }
+
+        main {
+            padding: 40px;
+        }
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000010;
+        }
+
+        .card h3 {
+            color: #64748b;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .healthy {
+            color: #16a34a;
+        }
+
+        footer {
+            padding: 25px 40px;
+            color: #64748b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>DevOps Employee Portal</h1>
+        <p>Application Monitoring Dashboard</p>
+    </header>
+
+    <main>
+        <section class="welcome">
+            <h2>Welcome to Employee Portal</h2>
+            <p>Monitor your application status and information.</p>
+        </section>
+
+        <section class="cards">
+
+            <div class="card">
+                <h3>Application Status</h3>
+                <p class="healthy" id="status">Checking...</p>
+            </div>
+
+            <div class="card">
+                <h3>Application Version</h3>
+                <p id="version">Loading...</p>
+            </div>
+
+            <div class="card">
+                <h3>Technology</h3>
+                <p>Node.js</p>
+            </div>
+
+            <div class="card">
+                <h3>Environment</h3>
+                <p id="environment">Loading...</p>
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        DevOps Employee Portal | CI/CD Project
+    </footer>
+
+    <script>
+        async function loadDashboard() {
+            try {
+                const home = await fetch("/");
+                const homeData = await home.json();
+
+                const info = await fetch("/api/info");
+                const infoData = await info.json();
+
+                document.getElementById("status").textContent =
+                    homeData.status;
+
+                document.getElementById("version").textContent =
+                    homeData.version;
+
+                document.getElementById("environment").textContent =
+                    infoData.environment;
+
+            } catch (error) {
+                document.getElementById("status").textContent =
+                    "Unavailable";
+            }
+        }
+
+        loadDashboard();
+    </script>
+
+</body>
+</html>

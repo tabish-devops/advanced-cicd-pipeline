@@ -1,0 +1,20 @@
+{
+  "name": "advanced-cicd-pipeline",
+  "version": "1.0.0",
+  "description": "Advanced Jenkins CI/CD Pipeline for Node.js Application on AWS",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "supertest": "^7.3.2"
+  }
+}
