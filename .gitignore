@@ -3,3 +3,15 @@ node_modules/
 .env.*
 !.env.example
 npm-debug.log*
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+
+# Secrets
+*.pem
+*.key
+
