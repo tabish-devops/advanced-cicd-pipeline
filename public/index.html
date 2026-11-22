@@ -1,148 +1,216 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevOps Employee Portal</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background: #f1f5f9;
-            color: #1e293b;
-        }
-
-        header {
-            background: #172554;
-            color: white;
-            padding: 22px 40px;
-        }
-
-        header h1 {
-            font-size: 25px;
-        }
-
-        header p {
-            margin-top: 8px;
-            color: #cbd5e1;
-        }
-
-        main {
-            padding: 40px;
-        }
-
-        .welcome {
-            margin-bottom: 30px;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px #00000010;
-        }
-
-        .card h3 {
-            color: #64748b;
-            margin-bottom: 15px;
-        }
-
-        .card p {
-            font-size: 25px;
-            font-weight: bold;
-        }
-
-        .healthy {
-            color: #16a34a;
-        }
-
-        footer {
-            padding: 25px 40px;
-            color: #64748b;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CloudOps Command Center</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,Segoe UI,Arial,sans-serif;background:#080e1b;color:#e5edf9;min-height:100vh}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:245px;background:#0d1628;border-right:1px solid #1d2b43;padding:28px 18px;flex-shrink:0}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:42px;padding:0 8px}
+.logo{width:39px;height:39px;border-radius:12px;background:linear-gradient(135deg,#06b6d4,#6366f1);display:grid;place-items:center;font-size:21px}
+.brand h2{font-size:16px;letter-spacing:.3px}
+.brand small{display:block;color:#8293ad;font-size:10px;margin-top:4px}
+.nav-label{font-size:10px;color:#63738d;letter-spacing:1.5px;margin:25px 10px 12px}
+.nav a{display:flex;gap:13px;align-items:center;text-decoration:none;color:#91a1ba;padding:13px 12px;border-radius:9px;margin:5px 0;font-size:13px}
+.nav a.active{background:#172b43;color:#43d5ee;border:1px solid #1d4660}
+.nav a span{font-size:17px;width:20px}
+.sidebar-bottom{margin-top:100px;border-top:1px solid #1d2b43;padding:18px 8px;color:#8293ad;font-size:11px;line-height:1.8}
+main{flex:1;min-width:0;padding:30px 38px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:35px}
+.topbar h1{font-size:23px}
+.topbar p{color:#8293ad;font-size:12px;margin-top:7px}
+.top-right{display:flex;align-items:center;gap:12px}
+.live{font-size:11px;color:#5ee0b0;background:#10352e;padding:9px 13px;border-radius:20px;border:1px solid #1d5b4b}
+.avatar{height:37px;width:37px;border-radius:50%;background:#243d5a;display:grid;place-items:center;color:#8de5f2;font-weight:bold}
+.welcome{background:linear-gradient(110deg,#122b43,#14213c 65%,#25254c);border:1px solid #254563;border-radius:15px;padding:27px 30px;margin-bottom:25px;position:relative;overflow:hidden}
+.welcome:after{content:"☁";position:absolute;right:55px;top:-30px;font-size:150px;color:#54cde0;opacity:.09}
+.eyebrow{color:#52d4e9;font-size:10px;letter-spacing:2px;font-weight:bold}
+.welcome h2{font-size:25px;margin:12px 0 9px}
+.welcome p{font-size:13px;color:#a6b8ce;max-width:550px;line-height:1.7}
+.section-title{font-size:15px;margin:27px 0 15px}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.card{background:#101b2e;border:1px solid #1d2d46;border-radius:13px;padding:19px;min-width:0}
+.metric-top{display:flex;justify-content:space-between;align-items:center;color:#91a2bb;font-size:11px}
+.metric-icon{width:34px;height:34px;border-radius:10px;background:#172d43;display:grid;place-items:center;font-size:17px}
+.metric-value{font-size:25px;font-weight:700;margin:17px 0 7px}
+.metric-note{font-size:10px;color:#7f91aa}
+.green{color:#51d6a4}.cyan{color:#4bd3e9}.purple{color:#a99bff}.orange{color:#ffbd70}
+.content-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:16px}
+.panel{background:#101b2e;border:1px solid #1d2d46;border-radius:13px;padding:21px;min-width:0}
+.panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.panel-head h3{font-size:14px}
+.panel-head small{font-size:10px;color:#8293ad}
+.pipeline{display:flex;align-items:center;justify-content:space-between;gap:5px;padding:16px 0}
+.stage{flex:1;text-align:center;min-width:0}
+.stage-icon{width:39px;height:39px;border-radius:12px;background:#17352f;color:#5ee0b0;display:grid;place-items:center;margin:0 auto 10px;font-size:17px}
+.stage:nth-child(3) .stage-icon{background:#202b4c;color:#9baaff}
+.stage:nth-child(5) .stage-icon{background:#3b2c20;color:#ffc27a}
+.stage b{font-size:10px;display:block}
+.stage small{display:block;font-size:9px;color:#8192aa;margin-top:5px}
+.connector{height:2px;background:#30415a;flex:.35;margin-top:-24px}
+.health-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #1d2b43;font-size:12px}
+.health-row:last-child{border:0}
+.health-label{display:flex;align-items:center;gap:10px;color:#c5d1e2}
+.dot{width:7px;height:7px;border-radius:50%;background:#51d6a4;box-shadow:0 0 9px #51d6a477}
+.status{font-size:10px;color:#51d6a4;background:#12372f;padding:6px 9px;border-radius:20px}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:16px}
+.info-box{padding:16px;background:#0c1729;border:1px solid #1b2b43;border-radius:10px}
+.info-box small{font-size:10px;color:#8192aa}
+.info-box p{font-size:13px;margin-top:8px;font-weight:600;overflow-wrap:anywhere}
+footer{text-align:center;color:#64758e;font-size:10px;padding:28px 0 8px}
+@media(max-width:1000px){.metrics{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.sidebar{display:none}main{padding:22px 16px}.content-grid{grid-template-columns:1fr}.topbar h1{font-size:19px}.welcome h2{font-size:21px}.info-grid{grid-template-columns:1fr}.pipeline{gap:2px}.stage b{font-size:9px}}
+</style>
 </head>
-
 <body>
+<div class="layout">
+<aside class="sidebar">
+  <div class="brand">
+    <div class="logo">☁</div>
+    <div><h2>CloudOps Center</h2><small>INFRASTRUCTURE PLATFORM</small></div>
+  </div>
+  <div class="nav-label">WORKSPACE</div>
+  <nav class="nav">
+    <a class="active" href="#"><span>▦</span> Overview</a>
+    <a href="#health"><span>◉</span> Service Health</a>
+    <a href="#pipeline"><span>⇄</span> CI/CD Pipeline</a>
+    <a href="#deployment"><span>◈</span> Deployments</a>
+  </nav>
+  <div class="nav-label">ENVIRONMENT</div>
+  <nav class="nav">
+    <a href="#environment"><span>☁</span> AWS Infrastructure</a>
+    <a href="#health"><span>⌁</span> Monitoring</a>
+  </nav>
+  <div class="sidebar-bottom">
+    <div>● Platform interface online</div>
+    <div>CloudOps Command Center</div>
+    <div>Version 1.0</div>
+  </div>
+</aside>
 
-    <header>
-        <h1>DevOps Employee Portal</h1>
-        <p>Application Monitoring Dashboard</p>
-    </header>
+<main>
+  <div class="topbar">
+    <div>
+      <h1>Infrastructure Overview</h1>
+      <p>Monitor your application and deployment environment</p>
+    </div>
+    <div class="top-right">
+      <div class="live">● LIVE STATUS</div>
+      <div class="avatar">CO</div>
+    </div>
+  </div>
 
-    <main>
-        <section class="welcome">
-            <h2>Welcome to Employee Portal</h2>
-            <p>Monitor your application status and information.</p>
-        </section>
+  <section class="welcome">
+    <div class="eyebrow">CLOUD OPERATIONS / OVERVIEW</div>
+    <h2>Welcome to your Command Center</h2>
+    <p>A centralized view of application health, deployment pipeline and cloud environment. Track your platform status from one place.</p>
+  </section>
 
-        <section class="cards">
+  <h3 class="section-title">Platform Metrics</h3>
+  <section class="metrics">
+    <div class="card">
+      <div class="metric-top">Application Status <span class="metric-icon">◉</span></div>
+      <div class="metric-value green" id="appStatus">Checking</div>
+      <div class="metric-note">Live health endpoint</div>
+    </div>
+    <div class="card">
+      <div class="metric-top">Application Version <span class="metric-icon">◈</span></div>
+      <div class="metric-value cyan" id="appVersion">—</div>
+      <div class="metric-note">Backend application version</div>
+    </div>
+    <div class="card">
+      <div class="metric-top">Runtime <span class="metric-icon">⌘</span></div>
+      <div class="metric-value purple">Node.js</div>
+      <div class="metric-note">Application runtime</div>
+    </div>
+    <div class="card">
+      <div class="metric-top">Environment <span class="metric-icon">☁</span></div>
+      <div class="metric-value orange" id="environment">Loading</div>
+      <div class="metric-note">Backend environment details</div>
+    </div>
+  </section>
 
-            <div class="card">
-                <h3>Application Status</h3>
-                <p class="healthy" id="status">Checking...</p>
-            </div>
+  <div class="content-grid">
+    <section class="panel" id="pipeline">
+      <div class="panel-head">
+        <h3>CI/CD Pipeline Workflow</h3>
+        <small>DEPLOYMENT PROCESS</small>
+      </div>
+      <div class="pipeline">
+        <div class="stage"><div class="stage-icon">⌘</div><b>GitHub</b><small>Source Code</small></div>
+        <div class="connector"></div>
+        <div class="stage"><div class="stage-icon">⚙</div><b>Jenkins</b><small>Build & Test</small></div>
+        <div class="connector"></div>
+        <div class="stage"><div class="stage-icon">▣</div><b>Docker</b><small>Container</small></div>
+        <div class="connector"></div>
+        <div class="stage"><div class="stage-icon">☁</div><b>AWS EC2</b><small>Deployment</small></div>
+      </div>
+      <p style="font-size:10px;color:#8293ad;line-height:1.6">Workflow architecture for this project. Build and deployment results are verified in Jenkins.</p>
+    </section>
 
-            <div class="card">
-                <h3>Application Version</h3>
-                <p id="version">Loading...</p>
-            </div>
+    <section class="panel" id="health">
+      <div class="panel-head">
+        <h3>Service Health</h3>
+        <small>LIVE CHECK</small>
+      </div>
+      <div class="health-row"><div class="health-label"><span class="dot"></span> Web Application</div><span class="status" id="webHealth">Checking</span></div>
+      <div class="health-row"><div class="health-label"><span class="dot"></span> Node.js Runtime</div><span class="status">Configured</span></div>
+      <div class="health-row"><div class="health-label"><span class="dot"></span> Docker Container</div><span class="status">Deployment Target</span></div>
+      <div class="health-row"><div class="health-label"><span class="dot"></span> AWS Environment</div><span class="status">Configured</span></div>
+    </section>
+  </div>
 
-            <div class="card">
-                <h3>Technology</h3>
-                <p>Node.js</p>
-            </div>
+  <section class="panel" id="deployment" style="margin-top:16px">
+    <div class="panel-head">
+      <h3>Deployment Information</h3>
+      <small>APPLICATION DETAILS</small>
+    </div>
+    <div class="info-grid" id="environment">
+      <div class="info-box"><small>Platform</small><p>AWS EC2</p></div>
+      <div class="info-box"><small>Containerization</small><p>Docker</p></div>
+      <div class="info-box"><small>Automation</small><p>Jenkins CI/CD</p></div>
+    </div>
+  </section>
 
-            <div class="card">
-                <h3>Environment</h3>
-                <p id="environment">Loading...</p>
-            </div>
+  <footer>CloudOps Command Center · Built with Node.js, Docker, Jenkins & AWS</footer>
+</main>
+</div>
 
-        </section>
-    </main>
+<script>
+async function loadDashboard(){
+  const status = document.getElementById("appStatus");
+  const health = document.getElementById("webHealth");
+  try {
+    const response = await fetch("/health");
+    if(!response.ok) throw new Error("Health check failed");
+    const data = await response.json();
+    const healthy = String(data.status || "").toLowerCase().includes("healthy")
+      || String(data.status || "").toLowerCase().includes("running");
+    status.textContent = data.status || "Healthy";
+    status.className = "metric-value " + (healthy ? "green" : "orange");
+    health.textContent = data.status || "Healthy";
+  } catch(error) {
+    status.textContent = "Unavailable";
+    status.className = "metric-value orange";
+    health.textContent = "Unavailable";
+  }
 
-    <footer>
-        DevOps Employee Portal | CI/CD Project
-    </footer>
-
-    <script>
-        async function loadDashboard() {
-            try {
-                const home = await fetch("/");
-                const homeData = await home.json();
-
-                const info = await fetch("/api/info");
-                const infoData = await info.json();
-
-                document.getElementById("status").textContent =
-                    homeData.status;
-
-                document.getElementById("version").textContent =
-                    homeData.version;
-
-                document.getElementById("environment").textContent =
-                    infoData.environment;
-
-            } catch (error) {
-                document.getElementById("status").textContent =
-                    "Unavailable";
-            }
-        }
-
-        loadDashboard();
-    </script>
-
+  try {
+    const response = await fetch("/api/info");
+    if(!response.ok) throw new Error("Info request failed");
+    const info = await response.json();
+    document.getElementById("environment").textContent = info.environment || "Not specified";
+    document.getElementById("appVersion").textContent = info.version || "1.0.0";
+  } catch(error) {
+    document.getElementById("environment").textContent = "Not available";
+    document.getElementById("appVersion").textContent = "1.0.0";
+  }
+}
+loadDashboard();
+</script>
 </body>
 </html>
